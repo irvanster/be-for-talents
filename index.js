@@ -41,6 +41,15 @@ app.post("/api/products", (req, res) => {
         return res.status(400).send(err)
     });
 });
+app.delete("/api/products/:id", (req, res) => {
+    db.query("DELETE FROM products WHERE id=$1",[req.params.id])
+      .then((result) => {
+          return res.send(result.rows)
+      })
+      .catch((err) => {
+          return res.send(err)
+      });
+  });
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
