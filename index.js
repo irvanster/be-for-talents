@@ -16,8 +16,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   } catch (error) {}
 app.get("/api/products", (req, res) => {
   db.query("SELECT * FROM products")
-    .then((result) => res.send(result.rows))
-    .catch((err) => res.send(err));
+    .then((result) => {
+        return res.send(result.rows)
+    })
+    .catch((err) => {
+        return res.send(err)
+    });
 });
 app.post("/api/products", (req, res) => {
   const request = {
@@ -30,8 +34,12 @@ app.post("/api/products", (req, res) => {
     "INSERT INTO products(name,price,category,image) VALUES ($1,$2,$3,$4)",
     [request.name, request.price, request.category, request.image]
   )
-    .then((result) => res.status(201).send(result.rows))
-    .catch((err) => res.status(400).send(err.message));
+    .then((result) => {
+        return res.status(201).send(result.rows)
+    })
+    .catch((err) => {
+        return res.status(400).send(err)
+    });
 });
 
 app.listen(port, () => {
